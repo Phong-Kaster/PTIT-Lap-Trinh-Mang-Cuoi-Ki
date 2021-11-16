@@ -44,7 +44,7 @@ Trong đoạn chương trình trên chúng ta có
 Thao tác với cơ sở dữ liệu, ở đây, có nghĩa là chúng ta cần có thể thêm - sửa - xóa với các bảng trong cơ sở dữ liệu mà ta kết nối tới. 
 Thông thường để giao tiếp cũng chúng ta sẽ có đoạn chương trình như sau:
 
-		    Connection connection = getConnection();
+	    Connection connection = getConnection();
             Statement statement = connection.createStatement();
             String query = "";
             
@@ -240,5 +240,5 @@ Tuy nhiên, cách thực hiện sẽ khác hoàn toàn. Cụ thể được trì
     }
 	
 	
-																									HO CHI MINH, VIETNAM
-																									16 November, 2021
+																						HO CHI MINH, VIETNAM
+																						16 November, 2021
