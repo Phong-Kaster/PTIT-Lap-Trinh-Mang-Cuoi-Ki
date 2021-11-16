@@ -238,7 +238,7 @@ Tuy nhiên, cách thực hiện sẽ khác hoàn toàn. Cụ thể được trì
         String result = new String( packet2.getData(),0 , packet2.getLength() );
         System.out.println(result);
     }
-	
-	
-																						HO CHI MINH, VIETNAM
-																						16 November, 2021
+    
+    
+HO CHI MINH, VIETNAM
+16 November, 2021
