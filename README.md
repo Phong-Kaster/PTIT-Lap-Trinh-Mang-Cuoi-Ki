@@ -1,14 +1,23 @@
-# Lap-Trinh-Mang-Co-Ban
-Tóm tắt lại một số kiến thức cơ bản liên quan tới TCP, UDP và giao tiếp với cơ sở dữ liệu
+<h1 align="center"> Tóm tắt kiến thức Lập Trình Mạng <br/></h1>
+
+<p align="center">
+	<img src="./avatar/cropped-1280-640-1177397.jpg" />
+</p>
 
 # [**Table of contents**](#table-of-contents)
-- [Lap-Trinh-Mang-Co-Ban](#lap-trinh-mang-co-ban)
 - [**Table of contents**](#table-of-contents)
 - [**1.Giao tiếp với cơ sở dữ liệu**](#1giao-tiếp-với-cơ-sở-dữ-liệu)
 	- [**1.1.Kết nối**](#11kết-nối)
 	- [**1.2.Thao tác**](#12thao-tác)
 - [**2.Lập trình với giao thức TCP**](#2lập-trình-với-giao-thức-tcp)
 - [**3.Lập trình với giao thức UDP**](#3lập-trình-với-giao-thức-udp)
+- [**4.Lập trình với giao thức RMI**](#4lập-trình-với-giao-thức-rmi)
+	- [**Interface**](#interface)
+	- [**Class**](#class)
+	- [**Server**](#server)
+	- [**Client**](#client)
+
+
 # [**1.Giao tiếp với cơ sở dữ liệu**](#giao-tiep-voi-co-so-du-lieu)
 ## [**1.1.Kết nối**](#ket-noi)
 Phần này xin giới thiệu sơ lược cách dùng kết nối cơ sở dữ liệu SQL Server trong một dự án lập trình mạng đơn giản. Để làm được
@@ -239,6 +248,113 @@ Tuy nhiên, cách thực hiện sẽ khác hoàn toàn. Cụ thể được trì
         System.out.println(result);
     }
     
-    
+# [**4.Lập trình với giao thức RMI**](#lap-trinh-voi-giao-thuc-RMI)
+
+Để viết chương trình với giao thức RMI, chúng ta cần 4 thành phần chính gồm
+
+1. **Interface** : chứa các khai báo về phương thức | hàm
+
+2. **Class** : class này sẽ kế thừa **Interface** để triển khai các phương thức | hàm hoàn chỉnh
+
+3. **Server** : nơi khai báo Registry để tạo liên kết giữa `Interface` và `Class`
+
+4. **Client** : nơi xử lý cho phía người dùng
+
+Giờ chúng ta sẽ thực hiện viết một chương trình đơn giản tính chu vi và diện tích hình chữ nhật bằng giao thức RMI
+
+## [**Interface**](#interface)
+
+	Chúng ta phải khai báo một interface để khai báo các tên các hàm muốn sử dụng trong chương trình.
+	
+		public interface chuNhat extends Remote 
+		{
+				public int chuVi(int a, int b) throws RemoteException;
+				public int dienTich(int a, int b) throws RemoteException;
+		}
+	Trong interface này chúng ta cần lưu ý gọi `extends Remote` để và gọi thư viện `import java.rmi.Remote`. Ngoài ra tất cả các phương thức | hàm phải có `throws RemoteException`.
+	
+## [**Class**](#class)
+
+	Chúng ta sẽ tiếp tục viết một Class kế thừa `Interface` bên trên và viết cụ thể các phương thức | hàm đã khai báo ở bên trên ở bên trên
+	
+		public class chuNhatImplement extends UnicastRemoteObject implements chuNhat
+		{
+
+				public chuNhatImplement() throws RemoteException
+				{
+					super();
+				}
+			
+			
+			
+				@Override
+				public int chuVi(int a, int b) throws RemoteException {
+					return (a+b)*2;
+				}
+
+
+
+				@Override
+				public int dienTich(int a, int b) throws RemoteException {
+					return a*b;
+				}
+		}
+		
+	Trong class phía trên chúng ta phải chú ý bắt buộc gọi `extends UnicastRemoteObject` và `implements chuNhat`. Ngoài việc, viết chương trình cụ thể cho các hàm. Chúng ta sẽ bắt buộc phải khai báo một **Contructor** không kèm theo tham số. 
+	
+## [**Server**](#server)
+
+	Chúng ta sẽ sử dụng `Registry` để tạo cổng và liên kết giữa `Interface` và `Class`.
+	
+		public static void main(String[] args) throws RemoteException {
+		
+		
+				Registry registry = LocateRegistry.createRegistry(5555);
+				System.out.println("Server is started ! ");
+				
+				
+				
+				/* khai bao class chuNhatImplement */
+				chuNhatImplement chuNhatImplements = new chuNhatImplement();
+				
+				
+				
+				/* dang ky ten class chuNhatImplement voi interface chuNhat */
+				registry.rebind("chuNhat", chuNhatImplements);
+		}
+	
+	Trong lệnh liên kết phía dưới, chúng ta dùng `rebind()` thay vì `bind()` bởi 
+	
+	- `Rebind()` : liên kết Interface và Class và cho phép người dùng sử dụng **liên tục**
+	
+	- `Bind()` : liên kết Interface và Class và cho phép người dùng sử dụng **một lần duy nhất**
+	
+## [**Client**](#client)
+
+	Client - chúng ta xử lý dữ liệu nhập từ phía người dùng.
+	
+	
+		public static void main(String[] args) throws RemoteException, NotBoundException 
+		{
+				Registry registry = LocateRegistry.getRegistry("localhost", 5555);
+				chuNhat rmi = (chuNhat) registry.lookup("chuNhat");
+				Scanner sc = new Scanner( System.in );
+				
+				
+				
+				System.out.println("Nhap chieu dai : ");
+				int a = sc.nextInt();
+				
+				System.out.println("Nhap chieu rong : ");
+				int b = sc.nextInt();
+				
+				
+				
+				int chuVi = rmi.chuVi(a, b);
+				int dienTich = rmi.dienTich(a, b);
+				
+				System.out.println("Chu vi hinh chu nhat = " + chuVi );
+				System.out.println("Dien tich = " + dienTich );
+		} 
 HO CHI MINH, VIETNAM <br/>
 16 November, 2021
