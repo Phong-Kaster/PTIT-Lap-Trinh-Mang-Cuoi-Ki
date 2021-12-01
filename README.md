@@ -279,51 +279,52 @@ Trong interface này chúng ta cần lưu ý gọi `extends Remote` để và g�
 
 Chúng ta sẽ tiếp tục viết một Class kế thừa `Interface` bên trên và viết cụ thể các phương thức | hàm đã khai báo ở bên trên ở bên trên
 	
-		public class chuNhatImplement extends UnicastRemoteObject implements chuNhat
-		{
+	public class chuNhatImplement extends UnicastRemoteObject implements chuNhat
+	{
 
-				public chuNhatImplement() throws RemoteException
-				{
-					super();
-				}
-			
-			
-			
-				@Override
-				public int chuVi(int a, int b) throws RemoteException {
-					return (a+b)*2;
-				}
+			public chuNhatImplement() throws RemoteException
+			{
+				super();
+			}
+		
+		
+		
+			@Override
+			public int chuVi(int a, int b) throws RemoteException {
+				return (a+b)*2;
+			}
 
 
 
-				@Override
-				public int dienTich(int a, int b) throws RemoteException {
-					return a*b;
-				}
-		}
+			@Override
+			public int dienTich(int a, int b) throws RemoteException {
+				return a*b;
+			}
+	}
 		
 Trong class phía trên chúng ta phải chú ý bắt buộc gọi `extends UnicastRemoteObject` và `implements chuNhat`. Ngoài việc, viết chương trình cụ thể cho các hàm. Chúng ta sẽ bắt buộc phải khai báo một **Contructor** không kèm theo tham số. 
 	
 ## [**Server**](#server)
 
-	Chúng ta sẽ sử dụng `Registry` để tạo cổng và liên kết giữa `Interface` và `Class`.
+Chúng ta sẽ sử dụng `Registry` để tạo cổng và liên kết giữa `Interface` và `Class`.
 	
-		public static void main(String[] args) throws RemoteException {
-		
-		
-				Registry registry = LocateRegistry.createRegistry(5555);
-				System.out.println("Server is started ! ");
-				
-				
-				
-				/* khai bao class chuNhatImplement */
-				chuNhatImplement chuNhatImplements = new chuNhatImplement();
-				
-				
-				
-				/* dang ky ten class chuNhatImplement voi interface chuNhat */
-				registry.rebind("chuNhat", chuNhatImplements);
-		}
+	public static void main(String[] args) throws RemoteException 
+	{
+	
+	
+			Registry registry = LocateRegistry.createRegistry(5555);
+			System.out.println("Server is started ! ");
+			
+			
+			
+			/* khai bao class chuNhatImplement */
+			chuNhatImplement chuNhatImplements = new chuNhatImplement();
+			
+			
+			
+			/* dang ky ten class chuNhatImplement voi interface chuNhat */
+			registry.rebind("chuNhat", chuNhatImplements);
+	}
 	
 
 
@@ -338,28 +339,28 @@ Trong lệnh liên kết phía dưới, chúng ta dùng `rebind()` thay vì `bin
 Client - chúng ta xử lý dữ liệu nhập từ phía người dùng.
 	
 	
-		public static void main(String[] args) throws RemoteException, NotBoundException 
-		{
-				Registry registry = LocateRegistry.getRegistry("localhost", 5555);
-				chuNhat rmi = (chuNhat) registry.lookup("chuNhat");
-				Scanner sc = new Scanner( System.in );
-				
-				
-				
-				System.out.println("Nhap chieu dai : ");
-				int a = sc.nextInt();
-				
-				System.out.println("Nhap chieu rong : ");
-				int b = sc.nextInt();
-				
-				
-				
-				int chuVi = rmi.chuVi(a, b);
-				int dienTich = rmi.dienTich(a, b);
-				
-				System.out.println("Chu vi hinh chu nhat = " + chuVi );
-				System.out.println("Dien tich = " + dienTich );
-		} 
+	public static void main(String[] args) throws RemoteException, NotBoundException 
+	{
+			Registry registry = LocateRegistry.getRegistry("localhost", 5555);
+			chuNhat rmi = (chuNhat) registry.lookup("chuNhat");
+			Scanner sc = new Scanner( System.in );
+			
+			
+			
+			System.out.println("Nhap chieu dai : ");
+			int a = sc.nextInt();
+			
+			System.out.println("Nhap chieu rong : ");
+			int b = sc.nextInt();
+			
+			
+			
+			int chuVi = rmi.chuVi(a, b);
+			int dienTich = rmi.dienTich(a, b);
+			
+			System.out.println("Chu vi hinh chu nhat = " + chuVi );
+			System.out.println("Dien tich = " + dienTich );
+	} 
 
 HO CHI MINH, VIETNAM <br/>
 16 November, 2021
