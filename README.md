@@ -37,17 +37,18 @@ Trong dự án, bắt buộc phải có đoạn chương trình sau:
 		}
 		
 Trong đoạn chương trình trên chúng ta có 
-1. database: tên cơ sở dữ liệu mà ta muốn giao tiếp. Ở ví dụ này là "LTM"
+1. **database**: tên cơ sở dữ liệu mà ta muốn giao tiếp. Ở ví dụ này là "LTM"
 
-2. user và password : tên tài khoản để đăng nhập vào Server chứa cơ sở dữ liệu. Ở đây chúng ta sử dụng tài khoản "sa" mặc định
+2. **user và password**: tên tài khoản để đăng nhập vào Server chứa cơ sở dữ liệu. Ở đây chúng ta sử dụng tài khoản "sa" mặc định
 
-3. port: cổng kết nối tới cơ sở dữ liệu. Cổng 1433 là mặc định của SQL Server
+3. **port**: cổng kết nối tới cơ sở dữ liệu. Cổng 1433 là mặc định của SQL Server
 
-4. server: tên biến sử dụng trong đường dẫn kết nối chính
+4. **server**: tên biến sử dụng trong đường dẫn kết nối chính
 
-5. url: đường dẫn để JDBC kết nối tới cơ sở dữ liệu ta mong muốn
+5. **url**: đường dẫn để JDBC kết nối tới cơ sở dữ liệu ta mong muốn
 
 > Note: khi lập trình mạng với giao thức TCP hoặc UDP. Chúng ta cần phải đặt đoạn chương trình trên ở phía Server. Không nên đặt ở phía Client
+
 ## [**1.2.Thao tác**](#thao-tac)
 
 Thao tác với cơ sở dữ liệu, ở đây, có nghĩa là chúng ta cần có thể thêm - sửa - xóa với các bảng trong cơ sở dữ liệu mà ta kết nối tới. 
@@ -264,18 +265,19 @@ Giờ chúng ta sẽ thực hiện viết một chương trình đơn giản tí
 
 ## [**Interface**](#interface)
 
-	Chúng ta phải khai báo một interface để khai báo các tên các hàm muốn sử dụng trong chương trình.
+Chúng ta phải khai báo một interface để khai báo các tên các hàm muốn sử dụng trong chương trình.
 	
 		public interface chuNhat extends Remote 
 		{
 				public int chuVi(int a, int b) throws RemoteException;
 				public int dienTich(int a, int b) throws RemoteException;
 		}
-	Trong interface này chúng ta cần lưu ý gọi `extends Remote` để và gọi thư viện `import java.rmi.Remote`. Ngoài ra tất cả các phương thức | hàm phải có `throws RemoteException`.
+
+Trong interface này chúng ta cần lưu ý gọi `extends Remote` để và gọi thư viện `import java.rmi.Remote`. Ngoài ra tất cả các phương thức | hàm phải có `throws RemoteException`.
 	
 ## [**Class**](#class)
 
-	Chúng ta sẽ tiếp tục viết một Class kế thừa `Interface` bên trên và viết cụ thể các phương thức | hàm đã khai báo ở bên trên ở bên trên
+Chúng ta sẽ tiếp tục viết một Class kế thừa `Interface` bên trên và viết cụ thể các phương thức | hàm đã khai báo ở bên trên ở bên trên
 	
 		public class chuNhatImplement extends UnicastRemoteObject implements chuNhat
 		{
@@ -300,7 +302,7 @@ Giờ chúng ta sẽ thực hiện viết một chương trình đơn giản tí
 				}
 		}
 		
-	Trong class phía trên chúng ta phải chú ý bắt buộc gọi `extends UnicastRemoteObject` và `implements chuNhat`. Ngoài việc, viết chương trình cụ thể cho các hàm. Chúng ta sẽ bắt buộc phải khai báo một **Contructor** không kèm theo tham số. 
+Trong class phía trên chúng ta phải chú ý bắt buộc gọi `extends UnicastRemoteObject` và `implements chuNhat`. Ngoài việc, viết chương trình cụ thể cho các hàm. Chúng ta sẽ bắt buộc phải khai báo một **Contructor** không kèm theo tham số. 
 	
 ## [**Server**](#server)
 
@@ -323,15 +325,17 @@ Giờ chúng ta sẽ thực hiện viết một chương trình đơn giản tí
 				registry.rebind("chuNhat", chuNhatImplements);
 		}
 	
-	Trong lệnh liên kết phía dưới, chúng ta dùng `rebind()` thay vì `bind()` bởi 
-	
-	- `Rebind()` : liên kết Interface và Class và cho phép người dùng sử dụng **liên tục**
-	
-	- `Bind()` : liên kết Interface và Class và cho phép người dùng sử dụng **một lần duy nhất**
+
+
+Trong lệnh liên kết phía dưới, chúng ta dùng `rebind()` thay vì `bind()` bởi 
+
+- `Rebind()` : liên kết Interface và Class và cho phép người dùng sử dụng **liên tục**
+
+- `Bind()` : liên kết Interface và Class và cho phép người dùng sử dụng **một lần duy nhất**
 	
 ## [**Client**](#client)
 
-	Client - chúng ta xử lý dữ liệu nhập từ phía người dùng.
+Client - chúng ta xử lý dữ liệu nhập từ phía người dùng.
 	
 	
 		public static void main(String[] args) throws RemoteException, NotBoundException 
@@ -356,5 +360,6 @@ Giờ chúng ta sẽ thực hiện viết một chương trình đơn giản tí
 				System.out.println("Chu vi hinh chu nhat = " + chuVi );
 				System.out.println("Dien tich = " + dienTich );
 		} 
+
 HO CHI MINH, VIETNAM <br/>
 16 November, 2021
