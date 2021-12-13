@@ -25,16 +25,16 @@ chúng ta cần có thư việc jdbc 4.2 , Netbean IDE và hệ quản trị cơ
 
 Trong dự án, bắt buộc phải có đoạn chương trình sau: 
 
-		public static Connection getConnection() throws SQLException
-		{
-			String database = "LTM";
-			String user = "sa";
-			String password = "123456";
-			String port = "1433";
-			String server = "localhost";
-			String url = "jdbc:sqlserver://"+server+":"+port+";databaseName="+database+";user="+user+";password="+password;
-			return DriverManager.getConnection(url);
-		}
+	public static Connection getConnection() throws SQLException
+	{
+		String database = "LTM";
+		String user = "sa";
+		String password = "123456";
+		String port = "1433";
+		String server = "localhost";
+		String url = "jdbc:sqlserver://"+server+":"+port+";databaseName="+database+";user="+user+";password="+password;
+		return DriverManager.getConnection(url);
+	}
 		
 Trong đoạn chương trình trên chúng ta có 
 1. **database**: tên cơ sở dữ liệu mà ta muốn giao tiếp. Ở ví dụ này là "LTM"
@@ -54,28 +54,28 @@ Trong đoạn chương trình trên chúng ta có
 Thao tác với cơ sở dữ liệu, ở đây, có nghĩa là chúng ta cần có thể thêm - sửa - xóa với các bảng trong cơ sở dữ liệu mà ta kết nối tới. 
 Thông thường để giao tiếp cũng chúng ta sẽ có đoạn chương trình như sau:
 
-	    Connection connection = getConnection();
-            Statement statement = connection.createStatement();
-            String query = "";
-            
-           
-            String query1 = "INSERT INTO person(name) VALUES ('Phong');";
-         
-            String query2 = "DELETE FROM person WHERE id = 007";
-            
-            String query3 = "UPDATE person SET name = 'Emma' WHERE id = 456;
-            
-			query = query1 || query2 || query3
-            
-            int rs = statement.executeUpdate(query);
-            if( rs > -1)
-            {
-               return "success"; 
-            }
-            else
-            {
-                return "fail";
-            }
+    Connection connection = getConnection();
+    Statement statement = connection.createStatement();
+    String query = "";
+
+
+    String query1 = "INSERT INTO person(name) VALUES ('Phong');";
+
+    String query2 = "DELETE FROM person WHERE id = 007";
+
+    String query3 = "UPDATE person SET name = 'Emma' WHERE id = 456;
+
+		query = query1 || query2 || query3
+
+    int rs = statement.executeUpdate(query);
+    if( rs > -1)
+    {
+       return "success"; 
+    }
+    else
+    {
+	return "fail";
+    }
 		
 Trong đoạn chương trình này chúng ta sẽ nhận thấy như sau:
 
@@ -269,8 +269,8 @@ Chúng ta phải khai báo một interface để khai báo các tên các hàm m
 	
 		public interface chuNhat extends Remote 
 		{
-				public int chuVi(int a, int b) throws RemoteException;
-				public int dienTich(int a, int b) throws RemoteException;
+			public int chuVi(int a, int b) throws RemoteException;
+			public int dienTich(int a, int b) throws RemoteException;
 		}
 
 Trong interface này chúng ta cần lưu ý gọi `extends Remote` để và gọi thư viện `import java.rmi.Remote`. Ngoài ra tất cả các phương thức | hàm phải có `throws RemoteException`.
@@ -282,24 +282,24 @@ Chúng ta sẽ tiếp tục viết một Class kế thừa `Interface` bên trê
 	public class chuNhatImplement extends UnicastRemoteObject implements chuNhat
 	{
 
-			public chuNhatImplement() throws RemoteException
-			{
-				super();
-			}
-		
-		
-		
-			@Override
-			public int chuVi(int a, int b) throws RemoteException {
-				return (a+b)*2;
-			}
+		public chuNhatImplement() throws RemoteException
+		{
+			super();
+		}
 
 
 
-			@Override
-			public int dienTich(int a, int b) throws RemoteException {
-				return a*b;
-			}
+		@Override
+		public int chuVi(int a, int b) throws RemoteException {
+			return (a+b)*2;
+		}
+
+
+
+		@Override
+		public int dienTich(int a, int b) throws RemoteException {
+			return a*b;
+		}
 	}
 		
 Trong class phía trên chúng ta phải chú ý bắt buộc gọi `extends UnicastRemoteObject` và `implements chuNhat`. Ngoài việc, viết chương trình cụ thể cho các hàm. Chúng ta sẽ bắt buộc phải khai báo một **Contructor** không kèm theo tham số. 
@@ -310,20 +310,18 @@ Chúng ta sẽ sử dụng `Registry` để tạo cổng và liên kết giữa 
 	
 	public static void main(String[] args) throws RemoteException 
 	{
-	
-	
-			Registry registry = LocateRegistry.createRegistry(5555);
-			System.out.println("Server is started ! ");
-			
-			
-			
-			/* khai bao class chuNhatImplement */
-			chuNhatImplement chuNhatImplements = new chuNhatImplement();
-			
-			
-			
-			/* dang ky ten class chuNhatImplement voi interface chuNhat */
-			registry.rebind("chuNhat", chuNhatImplements);
+		Registry registry = LocateRegistry.createRegistry(5555);
+		System.out.println("Server is started ! ");
+
+
+
+		/* khai bao class chuNhatImplement */
+		chuNhatImplement chuNhatImplements = new chuNhatImplement();
+
+
+
+		/* dang ky ten class chuNhatImplement voi interface chuNhat */
+		registry.rebind("chuNhat", chuNhatImplements);
 	}
 	
 
@@ -341,25 +339,25 @@ Client - chúng ta xử lý dữ liệu nhập từ phía người dùng.
 	
 	public static void main(String[] args) throws RemoteException, NotBoundException 
 	{
-			Registry registry = LocateRegistry.getRegistry("localhost", 5555);
-			chuNhat rmi = (chuNhat) registry.lookup("chuNhat");
-			Scanner sc = new Scanner( System.in );
-			
-			
-			
-			System.out.println("Nhap chieu dai : ");
-			int a = sc.nextInt();
-			
-			System.out.println("Nhap chieu rong : ");
-			int b = sc.nextInt();
-			
-			
-			
-			int chuVi = rmi.chuVi(a, b);
-			int dienTich = rmi.dienTich(a, b);
-			
-			System.out.println("Chu vi hinh chu nhat = " + chuVi );
-			System.out.println("Dien tich = " + dienTich );
+		Registry registry = LocateRegistry.getRegistry("localhost", 5555);
+		chuNhat rmi = (chuNhat) registry.lookup("chuNhat");
+		Scanner sc = new Scanner( System.in );
+
+
+
+		System.out.println("Nhap chieu dai : ");
+		int a = sc.nextInt();
+
+		System.out.println("Nhap chieu rong : ");
+		int b = sc.nextInt();
+
+
+
+		int chuVi = rmi.chuVi(a, b);
+		int dienTich = rmi.dienTich(a, b);
+
+		System.out.println("Chu vi hinh chu nhat = " + chuVi );
+		System.out.println("Dien tich = " + dienTich );
 	} 
 
 HO CHI MINH, VIETNAM <br/>
