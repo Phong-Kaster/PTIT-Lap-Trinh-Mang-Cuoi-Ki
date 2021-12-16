@@ -9,9 +9,10 @@
 - [**1.Giao tiếp với cơ sở dữ liệu**](#1giao-tiếp-với-cơ-sở-dữ-liệu)
 	- [**1.1.Kết nối**](#11kết-nối)
 	- [**1.2.Thao tác**](#12thao-tác)
-- [**2.Lập trình với giao thức TCP**](#2lập-trình-với-giao-thức-tcp)
-- [**3.Lập trình với giao thức UDP**](#3lập-trình-với-giao-thức-udp)
-- [**4.Lập trình với giao thức RMI**](#4lập-trình-với-giao-thức-rmi)
+- [**2.Đọc & ghi file**](#2đọc--ghi-file)
+- [**3.Lập trình với giao thức TCP**](#3lập-trình-với-giao-thức-tcp)
+- [**4.Lập trình với giao thức UDP**](#4lập-trình-với-giao-thức-udp)
+- [**5.Lập trình với giao thức RMI**](#5lập-trình-với-giao-thức-rmi)
 	- [**Interface**](#interface)
 	- [**Class**](#class)
 	- [**Server**](#server)
@@ -85,8 +86,81 @@ Trong đoạn chương trình này chúng ta sẽ nhận thấy như sau:
 
 3. Câu lệnh ***statement.executeUpdate(query)*** thực hiện câu truy vấn mong muốn
 
+# [**2.Đọc & ghi file**](#doc-&-ghi-file)
 
-# [**2.Lập trình với giao thức TCP**](#lap-trinh-voi-giao-thuc-TCP)
+Đây là một trong những nội dung chắc chắn sẽ có trong bài thi cuối kì. Lấy ví dụ nha, đọc và in ra một ma trận 3x3 từ file cho trước và lưu lại theo đường dẫn được nhập. 
+
+		//DOC NOI DUNG FILE
+        try 
+        {
+            File myObj = new File("Matrix.txt");
+            File myObj2 = new File("SortMatrix.txt");
+            int[][] myArray = new int[3][3];
+            
+            Scanner myReader = new Scanner(myObj);
+            
+
+
+            // CHEP MANG TU FILE RA 
+            while (myReader.hasNextLine()) 
+            {
+              for( int i = 0;i < myArray.length;i++)
+              {
+                  String[] line = myReader.nextLine().trim().split(" ");
+                  for( int j = 0 ; j < line.length; j++)
+                  {
+                      myArray[i][j] = Integer.parseInt( line[j] );  
+                  }
+              }
+            }
+            System.out.println("BEFORE");
+            System.out.println(Arrays.deepToString(myArray));
+            
+
+
+           //SAP XEP TU TRAI QUA PHAI , TU TREN XUONG DUOI
+            for( int i = 0 ; i < 3; i++)
+            {
+                for( int j = 0 ; j < 2 ;j++)
+                {
+                    
+                    if( myArray[i][j] > myArray[i][j+1])
+                    {
+                        int temp = myArray[i][j];
+                        myArray[i][j] = myArray[i][j+1];
+                        myArray[i][j+1] = temp;
+                    }
+                    
+                }
+            }
+            System.out.println("AFTER");
+            System.out.println(Arrays.deepToString(myArray));
+            
+            
+            // VIET VAO FILE result.txt
+	    	FileWriter myWriter = new FileWriter(myObj2);
+            
+            for( int i = 0 ; i < myArray.length; i++)
+            {
+                for( int j = 0 ; j < myArray.length ;j++)
+                {
+                    myWriter.write( myArray[i][j] + "," );
+                }
+                myWriter.write("\n");
+            }
+            
+            
+            myWriter.close();
+            myReader.close();
+        } 
+        catch (FileNotFoundException e) 
+        {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+Trong đó `Matrix.txt` là file cho trước & `SortMatrix.txt` sẽ lưu kết quả sau khi đã sắp xếp xong ❤.
+# [**3.Lập trình với giao thức TCP**](#lap-trinh-voi-giao-thuc-TCP)
 
 Để lập trình với giao thức TCP, chúng ta cần có 2 thành phần: Server và Client.
 
@@ -143,7 +217,7 @@ Chương trình có thể có nhiều tính năng bao nhiêu tùy thuộc vào n
 		}
 		
 		
-# [**3.Lập trình với giao thức UDP**](#lap-trinh-voi-giao-thuc-UDP)
+# [**4.Lập trình với giao thức UDP**](#lap-trinh-voi-giao-thuc-UDP)
 
 Lập trình với UDP cũng tương tự TCP. Gồm 2 phần chính là Server và Client
 
@@ -249,7 +323,7 @@ Tuy nhiên, cách thực hiện sẽ khác hoàn toàn. Cụ thể được trì
         System.out.println(result);
     }
     
-# [**4.Lập trình với giao thức RMI**](#lap-trinh-voi-giao-thuc-RMI)
+# [**5.Lập trình với giao thức RMI**](#lap-trinh-voi-giao-thuc-RMI)
 
 Để viết chương trình với giao thức RMI, chúng ta cần 4 thành phần chính gồm
 
