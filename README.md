@@ -17,6 +17,8 @@
 	- [**Class**](#class)
 	- [**Server**](#server)
 	- [**Client**](#client)
+- [**6.Lập trình với multi-chat**](#6lập-trình-với-multi-chat)
+- [**7.Đề thi chính thức khóa 2018**](#7đề-thi-chính-thức-khóa-2018)
 
 
 # [**1.Giao tiếp với cơ sở dữ liệu**](#giao-tiep-voi-co-so-du-lieu)
@@ -434,5 +436,24 @@ Client - chúng ta xử lý dữ liệu nhập từ phía người dùng.
 		System.out.println("Dien tich = " + dienTich );
 	} 
 
+# [**6.Lập trình với multi-chat**](#lap-trinh-voi-multi-chat)
+
+Cái này cũng là một nội dung thi dựa vào những giao thức đã được liệt kê bên trên.
+
+# [**7.Đề thi chính thức khóa 2018**](#de-thi-chinh-thuc-khoa-2018)
+
+Dưới là 2 đề thi năm mình học. Mỗi đề có 3 bài nhưng bài 1 và 2 thì sẽ được tự chọn để làm. Còn bài 3 là bắt buộc
+
+
+<h1>Ca 1</h1>
+<p align="center">
+	<img width="640" src="./avatar/DeThiCa1.jpg" />
+</p>
+
+<h1>Ca 2</h1>
+<p align="center">
+	<img width="640" src="./avatar/DeThiCa2.jpg" />
+</p>
+
 HO CHI MINH, VIETNAM <br/>
-16 November, 2021
+25 December, 2021
