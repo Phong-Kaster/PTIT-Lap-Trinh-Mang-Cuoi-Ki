@@ -442,7 +442,7 @@ Cái này cũng là một nội dung thi dựa vào những giao thức đã đ�
 
 # [**7.Đề thi chính thức khóa 2018**](#de-thi-chinh-thuc-khoa-2018)
 
-Dưới là 2 đề thi năm mình học. Mỗi đề có 3 bài nhưng bài 1 và 2 thì sẽ được tự chọn để làm. Còn bài 3 là bắt buộc
+Dưới là 2 đề thi năm mình học. Mỗi đề có 3 bài nhưng bài 1 và 2 thì sẽ được tự chọn để làm. Còn bài 3 là bắt buộc. Bài thi của mình diễn ra vào ngày 17-12-2021.
 
 
 <h1>Ca 1</h1>
